@@ -4,7 +4,7 @@ import time
 from pushbullet import Pushbullet
 from craigslist import CraigslistForSale
 
-api_key='o.'
+api_key='o.T'
 pb= Pushbullet(api_key)
 my_channel=pb.channels[0]
 postlist=[]
