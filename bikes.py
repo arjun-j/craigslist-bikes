@@ -9,11 +9,15 @@ postlist=[]
 for result in results:
 	print result
 	postlist.append(result)
-with open('bikelist.txt', 'a') as outfile:
-	json.dumps(postlist, outfile)
 
 
+print postlist	
 
-json_data=open('bikelist.txt').read()
+with open('bikelist.json', 'a') as outfile:
+	j=json.dumps(postlist)
+	outfile.write(j)
+
+
+json_data=open('bikelist.json').read()
 
 data = json.loads(json_data)
