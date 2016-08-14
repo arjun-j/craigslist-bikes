@@ -4,7 +4,7 @@ import time
 from pushbullet import Pushbullet
 from craigslist import CraigslistForSale
 
-api_key='o'
+api_key='o.'
 pb= Pushbullet(api_key)
 my_channel=pb.channels[0]
 postlist=[]
@@ -16,7 +16,7 @@ def sendmsg(pb,result):
 	print "Message sent!"
 	print push
 
-while true:
+while True:
 	try:
 		json_data=open('bikelist.json').read()
 		data = json.loads(json_data)
@@ -27,17 +27,21 @@ while true:
 
 	#craig = CraigslistForSale(site='raleigh',category='bia',filters={ 'max_price':60, 'min_price':15, 'has_image':True}	)
 	craig = CraigslistForSale(site='raleigh',category='bia',filters={ 'max_price':60, 'min_price':16, 'has_image':True, 'posted_today':True}	)
-	results=craig.get_results(sort_by='newest',limit=20)
+	results=craig.get_results(sort_by='newest',limit=30)
 
 	for result in results:
 		comp=False
+		loc=False
 		#print result
 		for item in postlist:
 			if (item['url'] == result['url']):
 				comp=True
 				break
 		print result['where']
-		if((comp==False) and ( (result['where']=='Raleigh/Cary Crossroads Cary Area') or result['where']=='Raleigh')):
+		if result['where']!=None:
+			if (result['where'].find('Raleigh')>0):
+				loc=True
+		if((comp==False) and ( (result['where']=='Raleigh/Cary Crossroads Cary Area') or (result['where']=='Raleigh') or ( loc==True  ))):
 			postlist.append(result)
 			sendmsg(pb,result)
 			print result
